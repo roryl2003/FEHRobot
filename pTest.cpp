@@ -1,0 +1,201 @@
+#include "pTest.hpp"
+#include "movement.hpp"
+#include "utility.hpp"
+
+void pTestOne(FEHMotor left, FEHMotor right, FEHMotor back, AnalogInputPin cds){
+    LCD.Clear();
+    LCD.WriteLine("Running");
+    
+    float redMin = 0, redMax = 1, blueMin = 0.850, blueMax = 0.900, clearMin = 2.459, clearMax = 2.550;
+    
+    // Wait till the light is red
+    while(!inRange(cds.Value(), redMin, redMax));
+
+    // Move Forward to Allign with CDS Cell
+    left.SetPercent(30);
+    right.SetPercent(-30);
+    Sleep(1.8);
+
+    // Move Horizontal to be on the CDS Cell
+    back.SetPercent(31);
+    left.SetPercent(-20);
+    right.SetPercent(-19);
+    Sleep(5.8);
+
+    back.SetPercent(0);
+    right.SetPercent(0);
+    left.SetPercent(0);
+
+    if (inRange(cds.Value(), blueMin, blueMax)) {
+        LCD.WriteLine("Blue");
+    } else {
+        LCD.WriteLine("Red");
+    }
+
+    Sleep(3.0);
+
+    // Rotate so Bumper is in Front
+    back.SetPercent(-20);
+    left.SetPercent(-20);
+    right.SetPercent(-20);
+    Sleep(2.0);    
+
+    // Move Forward to Hit Button
+    left.SetPercent(-50);
+    right.SetPercent(0);
+    back.SetPercent(50);
+
+    Sleep(2.0);
+
+    // Move Backwards to original position
+    left.SetPercent(20);
+    right.SetPercent(0);
+    back.SetPercent(-20);
+
+    Sleep(2.0);
+
+    // Rotate so Bumper is in Front
+    back.SetPercent(20);
+    left.SetPercent(20);
+    right.SetPercent(20);
+    Sleep(1.9);    
+
+    // Move Horizontal to allign to ramp
+    back.SetPercent(-31);
+    left.SetPercent(20);
+    right.SetPercent(19);
+    Sleep(3.0);
+
+    back.SetPercent(0);
+    left.SetPercent(50);
+    right.SetPercent(-52);
+    Sleep(6.0);
+
+    back.SetPercent(0);
+    left.SetPercent(-50);
+    right.SetPercent(50);
+    Sleep(6.0);
+
+    back.SetPercent(0);
+    right.SetPercent(0);
+    left.SetPercent(0);
+
+    //Drive toward the jukebox light
+    left.SetPercent(30);
+    right.SetPercent(-30);
+    Sleep(5.6);
+
+    left.SetPercent(0);
+    right.SetPercent(0);
+
+    Sleep(1.0);
+
+    rotate(left, right, back, true, 50, 180);
+   
+    //Read the light value
+    if (inRange(cds.Value(), blueMin, blueMax)) {
+        LCD.WriteLine("Blue");
+       
+        left.SetPercent(-30);
+        back.SetPercent(30);
+        right.SetPercent(0);
+
+        Sleep(5.0);
+
+        left.SetPercent(30);
+        back.SetPercent(-30);
+        right.SetPercent(0);
+
+        Sleep(1.0);
+    }
+   
+    else {
+        LCD.Write("Red");
+
+        right.SetPercent(-30);
+        left.SetPercent(10);
+        back.SetPercent(10);
+
+        Sleep(2.0);
+
+        left.SetPercent(-30);
+        back.SetPercent(30);
+        right.SetPercent(0);
+
+        Sleep(5.0);
+
+        left.SetPercent(30);
+        back.SetPercent(-30);
+        right.SetPercent(0);
+
+        Sleep(1.0);
+
+        right.SetPercent(30);
+        left.SetPercent(-10);
+        back.SetPercent(-10);
+
+        Sleep(5.0);
+    }
+
+   
+
+    //Drive toward button of correct color
+
+    right.SetPercent(0);
+    left.SetPercent(50);
+    back.SetPercent(-50);
+
+    Sleep(5.0);
+
+    right.SetPercent(0);
+    left.SetPercent(-50);
+    back.SetPercent(50);
+
+    Sleep(5.0);
+
+    //Drive to ramp
+
+    //Drive up ramp
+
+    //Drive down ramp
+
+    left.SetPercent(0);
+    right.SetPercent(0);
+    back.SetPercent(0);
+}
+
+void pTestTwo(FEHMotor left, FEHMotor right, FEHMotor back, AnalogInputPin cds, FEHServo leftS, FEHServo rightS){
+    float redMin = 0, redMax = 1, blueMin = 0.850, blueMax = 0.900, clearMin = 2.459, clearMax = 2.550;
+    while(!inRange(cds.Value(), redMin, redMax));
+    goForward(left, right, back, false, 0, 2.0, 25);
+    moveSideways(left, right, back, false, 6.25, 30);
+    goForward(left, right, back, false, 0, 4.5, 25);
+    dropCart(left, right, back, leftS, rightS);
+    moveSideways(left, right, back, true, 6.75, 30);
+    goForward(left, right, back, false, 0, 5.5, 25);
+    rotate(left, right, back, true, 20, 15);
+    goForward(left, right, back, false, 0, 0.3, 25);
+    moveSideways(left, right, back, false, 1.0, 30);
+    goForward(left, right, back, true, 0, 2.5, 25);
+    moveSideways(left, right, back, false, 3.25, 30);
+    rotate(left, right, back, true, 50, 120);
+    goForward(left, right, back, false, 2, 8, 75);
+}
+
+void pTestThree(FEHMotor left, FEHMotor right, FEHMotor back, AnalogInputPin cds, FEHServo leftS, FEHServo rightS){
+    float redMin = 0, redMax = 1, blueMin = 0.850, blueMax = 0.900, clearMin = 2.459, clearMax = 2.550;
+    while(!inRange(cds.Value(), redMin, redMax));
+    dropArm(leftS, rightS);
+    goForward(left, right, back, false, 0, 2.0, 25);
+    moveSideways(left, right, back, false, 3.25, 30);
+    rotate(left, right, back, true, 50, 120);
+    goForward(left, right, back, false, 2, 5.0, 75);
+    rotate(left, right, back, false, 50, 150);
+    goForward(left, right, back, false, 0, 8.00, 30);
+    goForward(left, right, back, true, 0, 0.50, 30);
+    sendArm(leftS, rightS, left, right, back, false);
+    moveSideways(left, right, back, false, 2.0, 30);
+    rotate(left, right, back, false, 50, 75);
+    goForward(left, right, back, false, 0, 4.00, 30);
+    dropArm(leftS, rightS);
+}

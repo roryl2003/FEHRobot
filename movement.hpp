@@ -25,6 +25,7 @@ void dropArm(FEHServo leftS, FEHServo rightS);
 void sendArm(FEHServo leftS, FEHServo rightS, FEHMotor left, FEHMotor right, FEHMotor back, bool reset);
 void flipSwitch(FEHServo leftS, FEHServo rightS);
 void hookRotator(FEHServo hook);
+void rpsJukeboxLight(FEHMotor left, FEHMotor right, FEHMotor back);
 void hitRedButton(FEHMotor left, FEHMotor right, FEHMotor back);
 void hitBlueButton(FEHMotor left, FEHMotor right, FEHMotor back);
 

@@ -138,6 +138,10 @@ void hookRotator(FEHServo hook){
     hook.SetDegree(90);
 }
 
+void rpsJukeboxLight(FEHMotor left, FEHMotor right, FEHMotor back) {
+
+}
+
 void hitRedButton(FEHMotor left, FEHMotor right, FEHMotor back){
 
 }

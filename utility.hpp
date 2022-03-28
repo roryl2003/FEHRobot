@@ -15,6 +15,9 @@
 #include <stdio.h>
 #include <iostream>
 #include <cmath>
+#include <vector>
+#include <string>
+using namespace std;
 
 bool inRange(float value, float min, float max);
 void optoSensorValue(AnalogInputPin optoSensor);

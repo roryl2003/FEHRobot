@@ -18,7 +18,12 @@ void readRPSVals() {
     //Declare variables
     float touch_x, touch_y;
     int n;
-    char points[4] = {'A','B','C','D'};
+    /*
+     * A = juxebox
+     * B = top of ramp
+     * C = in front of ice cream
+     */
+    char points[] = {'A', 'B', 'C'};
 
     //Call this function to initialize the RPS to a course
     RPS.InitializeTouchMenu();
@@ -41,7 +46,7 @@ void readRPSVals() {
     LCD.WriteRC("   Heading:",4,0);
 
     //Step through each path point to record position and heading
-    for (n = 0; n < 4; n++)
+    for (n = 0; n < sizeof(points); n++)
     {
         //Write point letter
         LCD.WriteRC("Touch to set point ",0,0);

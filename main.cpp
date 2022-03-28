@@ -13,6 +13,8 @@
 #include <stdio.h>
 #include <iostream>
 #include <cmath>
+#include <vector>
+#include <string>
 
 /* Include Classes */
 #include "screen.hpp"

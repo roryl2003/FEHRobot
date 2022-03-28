@@ -68,7 +68,7 @@ int main()
                 hookRotator(hook);
                 break;
             case 3:
-                goToStartingPoint(leftM, rightM, backM);
+                readRPSVals();
                 break;
             case 4:
                 pTestFour(leftM, rightM, backM, cds, leftS, rightS);

@@ -13,6 +13,8 @@ void optoSensorValue(AnalogInputPin optoSensor){
 }
 
 void readRPSVals() {
+    LCD.Clear();
+
     //Declare variables
     float touch_x, touch_y;
     int n;

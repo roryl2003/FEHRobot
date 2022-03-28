@@ -43,7 +43,7 @@ int mainMenu(){
     FEHIcon::DrawIconArray(title, 1, 1, 1, 201, 1, 1, title_label, WHITE, YELLOW);
 
     FEHIcon::Icon buttons[8];
-    char buttons_label[8][20] = {"Calibrator", "Rotator", "Hook", "Start Point", "PTest 4", "Encoder", "Full Send", "Rotate Arm"};
+    char buttons_label[8][20] = {"Calibrator", "Rotator", "Hook", "RPS Read", "PTest 4", "Encoder", "Full Send", "Rotate Arm"};
     FEHIcon::DrawIconArray(buttons, 4, 2, 40, 20, 1, 1, buttons_label, WHITE, YELLOW);
 
     while(1){

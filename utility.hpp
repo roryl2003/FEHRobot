@@ -17,5 +17,6 @@
 #include <cmath>
 
 bool inRange(float value, float min, float max);
+void optoSensorValue(AnalogInputPin optoSensor);
 
 #endif

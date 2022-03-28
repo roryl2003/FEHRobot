@@ -10,17 +10,21 @@ void rotate(FEHMotor left, FEHMotor right, FEHMotor back, bool clockwise, int po
     back.SetPercent(power);
     
     if(degree == 180){
-        Sleep(2.1);
+        Sleep(2.4);
     } else if(degree == -1){
         Sleep(10.0);
     } else if(degree == 60){
-        Sleep(0.8);
+        Sleep(0.65);
     } else if(degree == 75){
         Sleep(1.0);
     } else if(degree == 120){
         Sleep(1.6);
     } else if(degree == 150){
         Sleep(2.0);
+    } else if(degree == 45){
+        Sleep(0.5);
+    } else if(degree == 30){
+        Sleep(0.4);
     }
 
     left.SetPercent(0);
@@ -40,6 +44,10 @@ void goForward(FEHMotor left, FEHMotor right, FEHMotor back, bool backwards, int
         } else {
             left.SetPercent(power);
             right.SetPercent(-1 * power);
+
+            if(power == 90){
+                right.SetPercent(-1 * power + 3);
+            }
         }
     } else if(direction == 1){
         if(backwards){
@@ -55,11 +63,7 @@ void goForward(FEHMotor left, FEHMotor right, FEHMotor back, bool backwards, int
             back.SetPercent(1 * power);
         } else {
             back.SetPercent(power);
-            if(power == 75){
-                left.SetPercent(-1 * power - 5);
-            } else {
-                left.SetPercent(-1 * power);
-            }
+            left.SetPercent(-1 * power);
         }
     }
 
@@ -105,8 +109,13 @@ void dropCart(FEHMotor left, FEHMotor right, FEHMotor back, FEHServo leftS, FEHS
 }
 
 void dropArm(FEHServo leftS, FEHServo rightS){
-    leftS.SetDegree(0);
-    rightS.SetDegree(0);
+    leftS.SetDegree(60);
+    rightS.SetDegree(60);
+}
+
+void flipSwitch(FEHServo leftS, FEHServo rightS){
+    leftS.SetDegree(150);
+    rightS.SetDegree(150);
 }
 
 void sendArm(FEHServo leftS, FEHServo rightS, FEHMotor left, FEHMotor right, FEHMotor back, bool reset){
@@ -121,10 +130,10 @@ void sendArm(FEHServo leftS, FEHServo rightS, FEHMotor left, FEHMotor right, FEH
     }
 }
 
-void rotateArm(FEHServo flipS){
-    flipS.SetDegree(180);
+void hookRotator(FEHServo hook){
+    hook.SetDegree(0);
 
-    Sleep(3.0);
+    Sleep(2.0);
 
-    flipS.SetDegree(0);
+    hook.SetDegree(90);
 }

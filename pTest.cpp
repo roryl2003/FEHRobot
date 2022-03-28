@@ -199,3 +199,25 @@ void pTestThree(FEHMotor left, FEHMotor right, FEHMotor back, AnalogInputPin cds
     goForward(left, right, back, false, 0, 4.00, 30);
     dropArm(leftS, rightS);
 }
+
+void pTestFour(FEHMotor left, FEHMotor right, FEHMotor back, AnalogInputPin cds, FEHServo leftS, FEHServo rightS){
+    float redMin = 0, redMax = 1, blueMin = 0.850, blueMax = 0.900, clearMin = 2.459, clearMax = 2.550;
+    while(!inRange(cds.Value(), redMin, redMax));
+    flipSwitch(leftS, rightS);
+    goForward(left, right, back, false, 0, 5.0, 25);
+    moveSideways(left, right, back, false, 2.75, 30);
+    goForward(left, right, back, false, 0, 3.5, 90);
+    moveSideways(left, right, back, false, 3.0, 30);
+    rotate(left, right, back, false, 50, 45);
+    goForward(left, right, back, false, 0, 2.0, 30);
+    dropArm(leftS, rightS);
+    goForward(left, right, back, true, 0, 3.0, 30);
+    Sleep(7.0);
+    goForward(left, right, back, false, 0, 3.0, 30);
+    flipSwitch(leftS, rightS);
+    goForward(left, right, back, true, 0, 3.5, 30);
+    rotate(left, right, back, true, 50, 45);
+    goForward(left, right, back, true, 0, 7.0, 30);
+    rotate(left, right, back, false, 50, 60);
+    goForward(left, right, back, true, 0, 10.0, 30);
+}

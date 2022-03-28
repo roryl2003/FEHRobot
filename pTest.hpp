@@ -23,5 +23,6 @@
 void pTestOne(FEHMotor left, FEHMotor right, FEHMotor back, AnalogInputPin cds);
 void pTestTwo(FEHMotor left, FEHMotor right, FEHMotor back, AnalogInputPin cds, FEHServo leftS, FEHServo rightS);
 void pTestThree(FEHMotor left, FEHMotor right, FEHMotor back, AnalogInputPin cds, FEHServo leftS, FEHServo rightS);
+void pTestFour(FEHMotor left, FEHMotor right, FEHMotor back, AnalogInputPin cds, FEHServo leftS, FEHServo rightS);
 
 #endif

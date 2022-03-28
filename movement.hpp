@@ -23,6 +23,7 @@ void goToStartingPoint(FEHMotor left, FEHMotor right, FEHMotor back);
 void dropCart(FEHMotor left, FEHMotor right, FEHMotor back, FEHServo leftS, FEHServo rightS);
 void dropArm(FEHServo leftS, FEHServo rightS);
 void sendArm(FEHServo leftS, FEHServo rightS, FEHMotor left, FEHMotor right, FEHMotor back, bool reset);
-void rotateArm(FEHServo flipS);
+void flipSwitch(FEHServo leftS, FEHServo rightS);
+void hookRotator(FEHServo hook);
 
 #endif

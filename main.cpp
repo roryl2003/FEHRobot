@@ -18,6 +18,7 @@
 #include "screen.hpp"
 #include "pTest.hpp"
 #include "movement.hpp"
+#include "utility.hpp"
 
 using namespace std;
 
@@ -38,10 +39,13 @@ int main()
     FEHServo leftS(FEHServo::Servo0);
     FEHServo rightS(FEHServo::Servo7);
     FEHServo torqueS(FEHServo::Servo3);
+    FEHServo hook(FEHServo::Servo0);
 
     AnalogInputPin cds(FEHIO::P0_0);
 
     DigitalInputPin microswitch(FEHIO::P0_1);
+
+    AnalogInputPin optoSensor(FEHIO::P1_0);
 
     leftS.SetMin(500);
     leftS.SetMax(2279);
@@ -59,21 +63,22 @@ int main()
                 rotate(leftM, rightM, backM, true, 50, -1);
                 break;
             case 2:
+                hookRotator(hook);
                 break;
             case 3:
                 goToStartingPoint(leftM, rightM, backM);
                 break;
             case 4:
-                pTestThree(leftM, rightM, backM, cds, leftS, rightS);
+                pTestFour(leftM, rightM, backM, cds, leftS, rightS);
                 break;
             case 5:
-                dropCart(leftM, rightM, backM, leftS, rightS);
+                optoSensorValue(optoSensor);
                 break;
             case 6:
                 sendArm(leftS, rightS, leftM, rightM, backM, true);
                 break;
             case 7:
-                rotateArm(torqueS);
+                dropCart(leftM, rightM, backM, leftS, rightS);
                 break;
             default:
                 LCD.WriteLine("ERROR. OPTION VALUE IS: ");

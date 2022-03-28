@@ -30,8 +30,6 @@ Main Menu:
 
 /* Main function to control menu system */
 
-// I was here
-
 int main()
 {
     FEHMotor leftM(FEHMotor::Motor1, 7.2); 
@@ -47,7 +45,9 @@ int main()
 
     DigitalInputPin microswitch(FEHIO::P0_1);
 
-    AnalogInputPin optoSensor(FEHIO::P1_0);
+    AnalogInputPin leftOptoSensor(FEHIO::P1_0);
+    AnalogInputPin backOptoSensor(FEHIO::P1_4);
+    AnalogInputPin rightOptoSensor(FEHIO::P1_7);
 
     leftS.SetMin(500);
     leftS.SetMax(2279);
@@ -74,7 +74,7 @@ int main()
                 pTestFour(leftM, rightM, backM, cds, leftS, rightS);
                 break;
             case 5:
-                optoSensorValue(optoSensor);
+                optoSensorValue(leftOptoSensor);
                 break;
             case 6:
                 sendArm(leftS, rightS, leftM, rightM, backM, true);

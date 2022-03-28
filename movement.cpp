@@ -137,3 +137,11 @@ void hookRotator(FEHServo hook){
 
     hook.SetDegree(90);
 }
+
+void hitRedButton(FEHMotor left, FEHMotor right, FEHMotor back){
+
+}
+
+void hitBlueButton(FEHMotor left, FEHMotor right, FEHMotor back){
+    
+}

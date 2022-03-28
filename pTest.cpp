@@ -221,3 +221,37 @@ void pTestFour(FEHMotor left, FEHMotor right, FEHMotor back, AnalogInputPin cds,
     rotate(left, right, back, false, 50, 60);
     goForward(left, right, back, true, 0, 10.0, 30);
 }
+
+void individualCompetition(FEHMotor left, FEHMotor right, FEHMotor back, AnalogInputPin cds, FEHServo leftS, FEHServo rightS, AnalogInputPin leftO, AnalogInputPin rightO, AnalogInputPin backO){
+    // Clear Screen
+    LCD.Clear();
+    
+    // Start with start light
+    float redMin = 0, redMax = 1, blueMin = 0.850, blueMax = 0.900, clearMin = 2.459, clearMax = 2.550, startTime = TimeNow();
+    while(!inRange(cds.Value(), redMin, redMax));
+
+    // Travel to Drop Cart
+    goForward(left, right, back, false, 0, 5.0, 25);
+    rotate(left, right, back, true, 30, 60);
+    dropCart(left, right, back, leftS, rightS);
+    
+    // Printing Out Split
+    LCD.Write("Cart Split: ");
+    LCD.WriteLine(TimeNow() - startTime);
+
+    // Line Up and Read Juxebox Light
+    rotate(left, right, back, true, 30, 180);
+    goForward(left, right, back, false, 0, 3.0, 30);
+
+    // Hit Appropriate Button and Line Up With Ramp
+    if(inRange(cds.Value(), blueMin, blueMax)){
+        hitBlueButton(left, right, back);
+        moveSideways(left, right, back, true, 3, 30);
+    } else {
+        hitRedButton(left, right, back);
+        moveSideways(left, right, back, true, 1.5, 30);
+    }
+
+    // Go Up the Ramp
+    goForward(left, right, back, false, 0, 6.0, 90);
+}

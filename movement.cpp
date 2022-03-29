@@ -198,11 +198,12 @@ void hitBlueButton(FEHMotor left, FEHMotor right, FEHMotor back){
 }
 
 void directionalMovement(FEHMotor left, FEHMotor right, FEHMotor back, int degree, int power) {
-    int a1 = 30;
-    int a2 = 150;
-    int a3 = 270;
+    double a1 = M_PI / 6;
+    double a2 = 5 *  M_PI / 6;
+    double a3 = 3 * M_PI / 2;
+    double rads = degree * M_PI / 180;
 
-    right.SetPercent(power * sin(a1 - degree));
-    left.SetPercent(power * sin(a2 - degree));
-    back.SetPercent(power * sin(a3 - degree));
+    right.SetPercent(power * sin(a1 - rads));
+    left.SetPercent(power * sin(a2 - rads));
+    back.SetPercent(power * sin(a3 - rads));
 }

@@ -25,9 +25,13 @@ void dropArm(FEHServo leftS, FEHServo rightS);
 void sendArm(FEHServo leftS, FEHServo rightS, FEHMotor left, FEHMotor right, FEHMotor back, bool reset);
 void flipSwitch(FEHServo leftS, FEHServo rightS);
 void hookRotator(FEHServo hook);
-void rpsJukeboxLight(FEHMotor left, FEHMotor right, FEHMotor back);
+void rpsJukeboxLight(FEHMotor left, FEHMotor right, FEHMotor back, float A_x, float A_y);
 void hitRedButton(FEHMotor left, FEHMotor right, FEHMotor back);
 void hitBlueButton(FEHMotor left, FEHMotor right, FEHMotor back);
+void prepareForRamp(FEHMotor left, FEHMotor right, FEHMotor back, float x);
+void goUpRamp(FEHMotor left, FEHMotor right, FEHMotor back, float x, float y);
 void directionalMovement(FEHMotor left, FEHMotor right, FEHMotor back, int degree, int power);
+void directionalMovement(FEHMotor left, FEHMotor right, FEHMotor back, int degree, int power, double time);
+void directionalMovement(FEHMotor left, FEHMotor right, FEHMotor back, int degree, int power, int counts);
 
 #endif

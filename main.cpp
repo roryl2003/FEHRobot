@@ -34,9 +34,9 @@ Main Menu:
 
 int main()
 {
-    FEHMotor leftM(FEHMotor::Motor1, 7.2); 
+    FEHMotor leftM(FEHMotor::Motor0, 7.2); 
     FEHMotor rightM(FEHMotor::Motor2, 7.2);
-    FEHMotor backM(FEHMotor::Motor0, 7.2);
+    FEHMotor backM(FEHMotor::Motor1, 7.2);
 
     FEHServo leftS(FEHServo::Servo0);
     FEHServo rightS(FEHServo::Servo7);
@@ -47,7 +47,7 @@ int main()
 
     DigitalInputPin microswitch(FEHIO::P0_1);
 
-    AnalogInputPin leftOptoSensor(FEHIO::P1_0);
+    AnalogInputPin leftOptoSensor(FEHIO::P3_7);
     AnalogInputPin backOptoSensor(FEHIO::P1_4);
     AnalogInputPin rightOptoSensor(FEHIO::P1_7);
 
@@ -57,6 +57,9 @@ int main()
     rightS.SetMin(500);
     rightS.SetMax(2308);
 
+    leftS.SetDegree(120);
+    rightS.SetDegree(120);
+
     while(1){
         int option = mainMenu();
 
@@ -64,7 +67,11 @@ int main()
             case 0:
                 break;
             case 1:
-                rotate(leftM, rightM, backM, true, 50, -1);
+                while(1){
+                    LCD.Clear();
+                    LCD.WriteLine(cds.Value());
+                    Sleep(0.1);
+                }
                 break;
             case 2:
                 hookRotator(hook);
@@ -73,7 +80,7 @@ int main()
                 readRPSVals();
                 break;
             case 4:
-                pTestFour(leftM, rightM, backM, cds, leftS, rightS);
+                individualCompetition(leftM, rightM, backM, cds, leftS, rightS, leftOptoSensor, rightOptoSensor, backOptoSensor);
                 break;
             case 5:
                 optoSensorValue(leftOptoSensor);
@@ -82,7 +89,7 @@ int main()
                 sendArm(leftS, rightS, leftM, rightM, backM, true);
                 break;
             case 7:
-                dropCart(leftM, rightM, backM, leftS, rightS);
+                
                 break;
             default:
                 LCD.WriteLine("ERROR. OPTION VALUE IS: ");

@@ -28,5 +28,6 @@ void hookRotator(FEHServo hook);
 void rpsJukeboxLight(FEHMotor left, FEHMotor right, FEHMotor back);
 void hitRedButton(FEHMotor left, FEHMotor right, FEHMotor back);
 void hitBlueButton(FEHMotor left, FEHMotor right, FEHMotor back);
+void directionalMovement(FEHMotor left, FEHMotor right, FEHMotor back, int degree, int power);
 
 #endif

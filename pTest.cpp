@@ -225,33 +225,47 @@ void pTestFour(FEHMotor left, FEHMotor right, FEHMotor back, AnalogInputPin cds,
 void individualCompetition(FEHMotor left, FEHMotor right, FEHMotor back, AnalogInputPin cds, FEHServo leftS, FEHServo rightS, AnalogInputPin leftO, AnalogInputPin rightO, AnalogInputPin backO){
     // Clear Screen
     LCD.Clear();
+
+    RPS.InitializeTouchMenu();
     
     // Start with start light
     float redMin = 0, redMax = 1, blueMin = 0.850, blueMax = 0.900, clearMin = 2.459, clearMax = 2.550, startTime = TimeNow();
     while(!inRange(cds.Value(), redMin, redMax));
 
     // Travel to Drop Cart
-    goForward(left, right, back, false, 0, 5.0, 25);
-    rotate(left, right, back, true, 30, 60);
+    rotate(left, right, back, false, 50, 60);
+    goForward(left, right, back, false, 0, 3.75, 50);
+    rotate(left, right, back, true, 50, 60);
+    goForward(left, right, back, false, 0, 0.5, 50);
     dropCart(left, right, back, leftS, rightS);
-    
+
     // Printing Out Split
     LCD.Write("Cart Split: ");
     LCD.WriteLine(TimeNow() - startTime);
 
     // Line Up and Read Juxebox Light
-    rotate(left, right, back, true, 30, 180);
+    rpsJukeboxLight(left, right, back);
+    /*
+    rotate(left, right, back, true, 50, 180);
     goForward(left, right, back, false, 0, 3.0, 30);
+    */
 
     // Hit Appropriate Button and Line Up With Ramp
-    if(inRange(cds.Value(), blueMin, blueMax)){
+
+    Sleep(0.5);
+
+    LCD.WriteLine(cds.Value());
+
+    if(inRange(cds.Value(), blueMin, blueMax)) {
+        LCD.WriteLine("Blue");
         hitBlueButton(left, right, back);
-        moveSideways(left, right, back, true, 3, 30);
     } else {
+        LCD.WriteLine("Red");
         hitRedButton(left, right, back);
-        moveSideways(left, right, back, true, 1.5, 30);
     }
 
-    // Go Up the Ramp
-    goForward(left, right, back, false, 0, 6.0, 90);
+    LCD.Write("Button Split: ");
+    LCD.WriteLine(TimeNow() - startTime);
+
+    
 }

@@ -99,23 +99,23 @@ void goToStartingPoint(FEHMotor left, FEHMotor right, FEHMotor back){
 }
 
 void dropCart(FEHMotor left, FEHMotor right, FEHMotor back, FEHServo leftS, FEHServo rightS){
+    leftS.SetDegree(60);
+    rightS.SetDegree(60);
+
+    goForward(left, right, back, true, 0, 0.5, 50);
+
     leftS.SetDegree(90);
     rightS.SetDegree(90);
-
-    goForward(left, right, back, true, 0, 1.5, 50);
-
-    leftS.SetDegree(0);
-    rightS.SetDegree(0);
 }
 
 void dropArm(FEHServo leftS, FEHServo rightS){
-    leftS.SetDegree(60);
-    rightS.SetDegree(60);
+    leftS.SetDegree(30);
+    rightS.SetDegree(30);
 }
 
 void flipSwitch(FEHServo leftS, FEHServo rightS){
-    leftS.SetDegree(150);
-    rightS.SetDegree(150);
+    leftS.SetDegree(90);
+    rightS.SetDegree(90);
 }
 
 void sendArm(FEHServo leftS, FEHServo rightS, FEHMotor left, FEHMotor right, FEHMotor back, bool reset){
@@ -139,13 +139,70 @@ void hookRotator(FEHServo hook){
 }
 
 void rpsJukeboxLight(FEHMotor left, FEHMotor right, FEHMotor back) {
+    float A_x, A_y;
+
+    FEHFile* fptr = SD.FOpen("RPS_TEST.txt", "r");
+    SD.FScanf(fptr, "%f%f", &A_x, &A_y);
+    SD.FClose(fptr);
+
+    left.SetPercent(-20);
+    right.SetPercent(-20);
+    back.SetPercent(-20);
+    
+    while (RPS.Heading() < 270 - 5);
+
+
+    left.SetPercent(25);
+    right.SetPercent(-25);
+    back.SetPercent(0);
+
+    //directionalMovement(left, right, back, 90, 25);
+
+    while (RPS.Y() > A_y + 0.5);
+
+    if (RPS.X() < A_x - 0.5) {
+        left.SetPercent(-18);
+        right.SetPercent(-18);
+        back.SetPercent(25);
+
+        //directionalMovement(left, right, back, 180, 25);
+
+        while (RPS.X() < A_x - 0.5);
+    }
+    else if (RPS.X() > A_x + 0.5) {
+        left.SetPercent(18);
+        right.SetPercent(18);
+        back.SetPercent(-25);
+
+        //directionalMovement(left, right, back, 0, 25);
+
+        while (RPS.X() > A_x + 0.5);
+    }
+
+    left.SetPercent(0);
+    right.SetPercent(0);
+    back.SetPercent(0);
 
 }
 
 void hitRedButton(FEHMotor left, FEHMotor right, FEHMotor back){
-
+    moveSideways(left, right, back, true, 0.2, 50);
+    rotate(left, right, back, true, 50, 120);
+    goForward(left, right, back, false, 2, 1.5, 50);
 }
 
 void hitBlueButton(FEHMotor left, FEHMotor right, FEHMotor back){
-    
+    moveSideways(left, right, back, false, 0.2, 50);
+    rotate(left, right, back, true, 50, 120);
+    goForward(left, right, back, false, 2, 1.5, 50);
+}
+
+void directionalMovement(FEHMotor left, FEHMotor right, FEHMotor back, int degree, int power) {
+    int a1 = 30;
+    int a2 = 150;
+    int a3 = 270;
+
+    right.SetPercent(power * sin(a1 - degree));
+    left.SetPercent(power * sin(a2 - degree));
+    back.SetPercent(power * sin(a3 - degree));
 }

@@ -227,6 +227,12 @@ void individualCompetition(FEHMotor left, FEHMotor right, FEHMotor back, AnalogI
     LCD.Clear();
 
     RPS.InitializeTouchMenu();
+
+    // Fetch RPS Values
+    FEHFile* fptr = SD.FOpen("RPS_TEST.txt", "r");
+    float A_x, A_y, B_x, B_y, C_x, C_y;
+    SD.FScanf(fptr, "%f%f%f%f%f%f", &A_x, &A_y, &B_x, &B_y, &C_x, &C_y);
+    SD.FClose(fptr);
     
     // Start with start light
     float redMin = 0, redMax = 1, blueMin = 0.850, blueMax = 0.900, clearMin = 2.459, clearMax = 2.550, startTime = TimeNow();
@@ -244,7 +250,7 @@ void individualCompetition(FEHMotor left, FEHMotor right, FEHMotor back, AnalogI
     LCD.WriteLine(TimeNow() - startTime);
 
     // Line Up and Read Juxebox Light
-    rpsJukeboxLight(left, right, back);
+    rpsJukeboxLight(left, right, back, A_x, A_y);
     /*
     rotate(left, right, back, true, 50, 180);
     goForward(left, right, back, false, 0, 3.0, 30);
@@ -267,5 +273,7 @@ void individualCompetition(FEHMotor left, FEHMotor right, FEHMotor back, AnalogI
     LCD.Write("Button Split: ");
     LCD.WriteLine(TimeNow() - startTime);
 
-    
+    prepareForRamp(left, right, back, B_x);
+
+    goUpRamp(left, right, back, C_x, C_y);
 }

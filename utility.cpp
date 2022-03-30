@@ -23,8 +23,9 @@ void readRPSVals() {
      * B = bottom of ramp
      * C = top of ramp
      * D = in front of ice cream
+     * E = Preparing for burger
      */
-    char points[] = {'A', 'B', 'C', 'D'};
+    char points[] = {'A', 'B', 'C', 'D', 'E', 'F'};
 
     //Call this function to initialize the RPS to a course
     RPS.InitializeTouchMenu();

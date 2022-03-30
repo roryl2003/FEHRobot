@@ -230,11 +230,13 @@ void individualCompetition(FEHMotor left, FEHMotor right, FEHMotor back, AnalogI
 
     // Fetch RPS Values
     FEHFile* fptr = SD.FOpen("RPS_TEST.txt", "r");
-    float A_x, A_y, B_x, B_y, C_x, C_y, D_x, D_y;
+    float A_x, A_y, B_x, B_y, C_x, C_y, D_x, D_y, E_x, E_y, F_x, F_y;
     SD.FScanf(fptr, "%f%f", &A_x, &A_y);
     SD.FScanf(fptr, "%f%f", &B_x, &B_y);
     SD.FScanf(fptr, "%f%f", &C_x, &C_y);
     SD.FScanf(fptr, "%f%f", &D_x, &D_y);
+    SD.FScanf(fptr, "%f%f", &E_x, &E_y);
+    SD.FScanf(fptr, "%f%f", &F_x, &F_y);
     SD.FClose(fptr);
     
     // Start with start light
@@ -243,7 +245,7 @@ void individualCompetition(FEHMotor left, FEHMotor right, FEHMotor back, AnalogI
 
     // Travel to Drop Cart
     rotate(left, right, back, false, 50, 60);
-    goForward(left, right, back, false, 0, 3.6, 50);
+    goForward(left, right, back, false, 0, 3.7, 50);
     rotate(left, right, back, true, 50, 60);
     goForward(left, right, back, false, 0, 0.5, 50);
     dropCart(left, right, back, leftS, rightS);
@@ -293,6 +295,22 @@ void individualCompetition(FEHMotor left, FEHMotor right, FEHMotor back, AnalogI
         dropChocolate(left, right, back, leftS, rightS);
     }
 
+    prepareBurger(left, right, back, E_x, E_y);
+
+    //goForward(left, right, back, true, 0, 3.0, 50);
+    sendArm(leftS, rightS, left, right, back, false);
+
+    slideTicket(left, right, back, F_x, F_y);
+
+    prepareForRamp2(left, right, back, C_x);
+
+    goDownRamp(left, right, back, B_y);
+
+    rotate(left, right, back, true, 50, 60);
+
+    goForward(left, right, back, false, 2, 5.0, 50);
+
     Sleep(10.0);
 
+    
 }

@@ -38,5 +38,9 @@ void directionalMovement(FEHMotor left, FEHMotor right, FEHMotor back, int degre
 void dropVanilla(FEHMotor left, FEHMotor right, FEHMotor back, FEHServo leftS, FEHServo rightS);
 void dropMixed(FEHMotor left, FEHMotor right, FEHMotor back, FEHServo leftS, FEHServo rightS);
 void dropChocolate(FEHMotor left, FEHMotor right, FEHMotor back, FEHServo leftS, FEHServo rightS);
+void prepareBurger(FEHMotor left, FEHMotor right, FEHMotor back, float x, float y);
+void slideTicket(FEHMotor left, FEHMotor right, FEHMotor back, float x, float y);
+void prepareForRamp2(FEHMotor left, FEHMotor right, FEHMotor back, float x);
+void goDownRamp(FEHMotor left, FEHMotor right, FEHMotor back, float y);
 
 #endif

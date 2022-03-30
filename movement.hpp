@@ -30,8 +30,13 @@ void hitRedButton(FEHMotor left, FEHMotor right, FEHMotor back);
 void hitBlueButton(FEHMotor left, FEHMotor right, FEHMotor back);
 void prepareForRamp(FEHMotor left, FEHMotor right, FEHMotor back, float x);
 void goUpRamp(FEHMotor left, FEHMotor right, FEHMotor back, float x, float y);
-void directionalMovement(FEHMotor left, FEHMotor right, FEHMotor back, int degree, int power);
+void prepareForIceCream(FEHMotor left, FEHMotor right, FEHMotor back, float x, float y);
+void directionalMovementDegrees(FEHMotor left, FEHMotor right, FEHMotor back, int degree, int power);
+void directionalMovement(FEHMotor left, FEHMotor right, FEHMotor back, float rads, int power);
 void directionalMovement(FEHMotor left, FEHMotor right, FEHMotor back, int degree, int power, double time);
 void directionalMovement(FEHMotor left, FEHMotor right, FEHMotor back, int degree, int power, int counts);
+void dropVanilla(FEHMotor left, FEHMotor right, FEHMotor back, FEHServo leftS, FEHServo rightS);
+void dropMixed(FEHMotor left, FEHMotor right, FEHMotor back, FEHServo leftS, FEHServo rightS);
+void dropChocolate(FEHMotor left, FEHMotor right, FEHMotor back, FEHServo leftS, FEHServo rightS);
 
 #endif

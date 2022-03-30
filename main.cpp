@@ -48,8 +48,8 @@ int main()
     DigitalInputPin microswitch(FEHIO::P0_1);
 
     AnalogInputPin leftOptoSensor(FEHIO::P3_7);
-    AnalogInputPin backOptoSensor(FEHIO::P1_4);
-    AnalogInputPin rightOptoSensor(FEHIO::P1_7);
+    AnalogInputPin backOptoSensor(FEHIO::P2_0);
+    AnalogInputPin rightOptoSensor(FEHIO::P1_0);
 
     leftS.SetMin(500);
     leftS.SetMax(2279);
@@ -70,11 +70,27 @@ int main()
                 while(1){
                     LCD.Clear();
                     LCD.WriteLine(cds.Value());
-                    Sleep(0.1);
+
+                    Sleep(0.05);
                 }
                 break;
             case 2:
-                hookRotator(hook);
+                leftM.SetPercent(50);
+                rightM.SetPercent(50);
+                backM.SetPercent(50);
+
+                while(1){
+                    LCD.Clear();
+                    LCD.Write("Left Value: ");
+                    LCD.WriteLine(leftOptoSensor.Value());
+                    LCD.Write("Right Value: ");
+                    LCD.WriteLine(rightOptoSensor.Value());
+                    LCD.Write("Back Value: ");
+                    LCD.WriteLine(backOptoSensor.Value());
+
+                    Sleep(0.1);
+                }
+
                 break;
             case 3:
                 readRPSVals();
@@ -86,7 +102,7 @@ int main()
                 optoSensorValue(leftOptoSensor);
                 break;
             case 6:
-                sendArm(leftS, rightS, leftM, rightM, backM, true);
+                directionalMovement(leftM, rightM, backM, 300, 20, 5.0);
                 break;
             case 7:
                 

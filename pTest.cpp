@@ -230,17 +230,20 @@ void individualCompetition(FEHMotor left, FEHMotor right, FEHMotor back, AnalogI
 
     // Fetch RPS Values
     FEHFile* fptr = SD.FOpen("RPS_TEST.txt", "r");
-    float A_x, A_y, B_x, B_y, C_x, C_y;
-    SD.FScanf(fptr, "%f%f%f%f%f%f", &A_x, &A_y, &B_x, &B_y, &C_x, &C_y);
+    float A_x, A_y, B_x, B_y, C_x, C_y, D_x, D_y;
+    SD.FScanf(fptr, "%f%f", &A_x, &A_y);
+    SD.FScanf(fptr, "%f%f", &B_x, &B_y);
+    SD.FScanf(fptr, "%f%f", &C_x, &C_y);
+    SD.FScanf(fptr, "%f%f", &D_x, &D_y);
     SD.FClose(fptr);
     
     // Start with start light
-    float redMin = 0, redMax = 1, blueMin = 0.850, blueMax = 0.900, clearMin = 2.459, clearMax = 2.550, startTime = TimeNow();
+    float redMin = 0, redMax = 1.5, blueMin = 0.0, blueMax = 1.5, clearMin = 2.459, clearMax = 2.550, startTime = TimeNow();
     while(!inRange(cds.Value(), redMin, redMax));
 
     // Travel to Drop Cart
     rotate(left, right, back, false, 50, 60);
-    goForward(left, right, back, false, 0, 3.75, 50);
+    goForward(left, right, back, false, 0, 3.6, 50);
     rotate(left, right, back, true, 50, 60);
     goForward(left, right, back, false, 0, 0.5, 50);
     dropCart(left, right, back, leftS, rightS);
@@ -262,12 +265,12 @@ void individualCompetition(FEHMotor left, FEHMotor right, FEHMotor back, AnalogI
 
     LCD.WriteLine(cds.Value());
 
-    if(inRange(cds.Value(), blueMin, blueMax)) {
-        LCD.WriteLine("Blue");
-        hitBlueButton(left, right, back);
-    } else {
+    if(inRange(cds.Value(), redMin, redMax)) {
         LCD.WriteLine("Red");
         hitRedButton(left, right, back);
+    } else {
+        LCD.WriteLine("Blue");
+        hitBlueButton(left, right, back);
     }
 
     LCD.Write("Button Split: ");
@@ -276,4 +279,20 @@ void individualCompetition(FEHMotor left, FEHMotor right, FEHMotor back, AnalogI
     prepareForRamp(left, right, back, B_x);
 
     goUpRamp(left, right, back, C_x, C_y);
+
+    LCD.Write("Ramp Split: ");
+    LCD.WriteLine(TimeNow() - startTime);
+
+    prepareForIceCream(left, right, back, D_x, D_y);
+
+    if(RPS.GetIceCream() == 0){
+        dropVanilla(left, right, back, leftS, rightS);
+    } else if(RPS.GetIceCream() == 1){
+        dropMixed(left, right, back, leftS, rightS);
+    } else {
+        dropChocolate(left, right, back, leftS, rightS);
+    }
+
+    Sleep(10.0);
+
 }

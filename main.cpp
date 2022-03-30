@@ -57,8 +57,8 @@ int main()
     rightS.SetMin(500);
     rightS.SetMax(2308);
 
-    leftS.SetDegree(120);
-    rightS.SetDegree(120);
+    leftS.SetDegree(150);
+    rightS.SetDegree(150);
 
     while(1){
         int option = mainMenu();

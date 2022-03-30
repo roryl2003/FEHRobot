@@ -24,6 +24,7 @@ void readRPSVals() {
      * C = top of ramp
      * D = in front of ice cream
      * E = Preparing for burger
+     * F = in ticket
      */
     char points[] = {'A', 'B', 'C', 'D', 'E', 'F'};
 

@@ -244,6 +244,10 @@ void prepareForRamp2(FEHMotor left, FEHMotor right, FEHMotor back, float x){
     right.SetPercent(22);
 
     while (RPS.X() > x + 0.5);
+
+    left.SetPercent(0);
+    right.SetPercent(0);
+    back.SetPercent(0);
 } 
 
 void goDownRamp(FEHMotor left, FEHMotor right, FEHMotor back, float y) {

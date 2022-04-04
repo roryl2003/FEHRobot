@@ -40,8 +40,6 @@ int main()
 
     FEHServo leftS(FEHServo::Servo0);
     FEHServo rightS(FEHServo::Servo7);
-    FEHServo torqueS(FEHServo::Servo3);
-    FEHServo hook(FEHServo::Servo0);
 
     AnalogInputPin cds(FEHIO::P0_0);
 
@@ -51,61 +49,33 @@ int main()
     AnalogInputPin backOptoSensor(FEHIO::P2_0);
     AnalogInputPin rightOptoSensor(FEHIO::P1_0);
 
-    leftS.SetMin(500);
-    leftS.SetMax(2279);
+    leftS.SetMin(809);
+    leftS.SetMax(2500);
 
-    rightS.SetMin(500);
-    rightS.SetMax(2308);
-
-    leftS.SetDegree(150);
-    rightS.SetDegree(150);
+    leftS.SetDegree(65);
 
     while(1){
         int option = mainMenu();
 
         switch(option){
             case 0:
+                individualCompetition(leftM, rightM, backM, cds, leftS, rightS, leftOptoSensor, rightOptoSensor, backOptoSensor, true);
                 break;
             case 1:
-                while(1){
-                    LCD.Clear();
-                    LCD.WriteLine(cds.Value());
-
-                    Sleep(0.05);
-                }
                 break;
             case 2:
-                leftM.SetPercent(50);
-                rightM.SetPercent(50);
-                backM.SetPercent(50);
-
-                while(1){
-                    LCD.Clear();
-                    LCD.Write("Left Value: ");
-                    LCD.WriteLine(leftOptoSensor.Value());
-                    LCD.Write("Right Value: ");
-                    LCD.WriteLine(rightOptoSensor.Value());
-                    LCD.Write("Back Value: ");
-                    LCD.WriteLine(backOptoSensor.Value());
-
-                    Sleep(0.1);
-                }
-
                 break;
             case 3:
                 readRPSVals();
                 break;
             case 4:
-                individualCompetition(leftM, rightM, backM, cds, leftS, rightS, leftOptoSensor, rightOptoSensor, backOptoSensor);
                 break;
             case 5:
-                optoSensorValue(leftOptoSensor);
                 break;
             case 6:
-                directionalMovement(leftM, rightM, backM, 300, 20, 5.0);
                 break;
             case 7:
-                
+                individualCompetition(leftM, rightM, backM, cds, leftS, rightS, leftOptoSensor, rightOptoSensor, backOptoSensor, false);
                 break;
             default:
                 LCD.WriteLine("ERROR. OPTION VALUE IS: ");

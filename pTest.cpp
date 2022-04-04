@@ -222,14 +222,19 @@ void pTestFour(FEHMotor left, FEHMotor right, FEHMotor back, AnalogInputPin cds,
     goForward(left, right, back, true, 0, 10.0, 30);
 }
 
-void individualCompetition(FEHMotor left, FEHMotor right, FEHMotor back, AnalogInputPin cds, FEHServo leftS, FEHServo rightS, AnalogInputPin leftO, AnalogInputPin rightO, AnalogInputPin backO){
+void individualCompetition(FEHMotor left, FEHMotor right, FEHMotor back, AnalogInputPin cds, FEHServo leftS, FEHServo rightS, AnalogInputPin leftO, AnalogInputPin rightO, AnalogInputPin backO, bool fail){
     // Clear Screen
     LCD.Clear();
 
     RPS.InitializeTouchMenu();
 
     // Fetch RPS Values
-    FEHFile* fptr = SD.FOpen("RPS_TEST.txt", "r");
+    FEHFile* fptr;
+    if(fail){
+        fptr = SD.FOpen("RPS_TEST.txt", "r");
+    } else {
+        fptr = SD.FOpen("RPS_2.txt", "r");
+    }
     float A_x, A_y, B_x, B_y, C_x, C_y, D_x, D_y, E_x, E_y, F_x, F_y;
     SD.FScanf(fptr, "%f%f", &A_x, &A_y);
     SD.FScanf(fptr, "%f%f", &B_x, &B_y);
@@ -306,7 +311,9 @@ void individualCompetition(FEHMotor left, FEHMotor right, FEHMotor back, AnalogI
 
     goDownRamp(left, right, back, B_y);
 
-    rotate(left, right, back, true, 50, 60);
+    rotate(left, right, back, true, 50, 75);
+
+    while(RPS.Heading() < 180);
 
     goForward(left, right, back, false, 2, 5.0, 50);
 

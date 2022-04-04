@@ -32,7 +32,7 @@ void readRPSVals() {
     RPS.InitializeTouchMenu();
 
     //Open SD file for writing
-    FEHFile *fptr = SD.FOpen("RPS_Test.txt","w");
+    FEHFile *fptr = SD.FOpen("RPS_2.txt","w");
 
     //Wait for touchscreen to be pressed and released
     LCD.WriteLine("Press Screen to Start");
@@ -69,7 +69,7 @@ void readRPSVals() {
         //Print RPS data for this path point to file
         SD.FPrintf(fptr, "%f %f\n", RPS.X(), RPS.Y());
 
-        Sleep(0.5);
+        Sleep(1.0);
     }
 
     //Close SD file

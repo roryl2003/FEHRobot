@@ -283,7 +283,7 @@ void individualCompetition(FEHMotor left, FEHMotor right, FEHMotor back, AnalogI
     LCD.Write("Button Split: ");
     LCD.WriteLine(TimeNow() - startTime);
 
-    prepareForRamp(left, right, back, B_x);
+    prepareForRamp(left, right, back, B_x, B_y);
 
     goUpRamp(left, right, back, C_x, C_y);
 
@@ -293,11 +293,43 @@ void individualCompetition(FEHMotor left, FEHMotor right, FEHMotor back, AnalogI
     prepareForIceCream(left, right, back, D_x, D_y);
 
     if(RPS.GetIceCream() == 0){
+        back.SetPercent(30);
+        right.SetPercent(-20);
+        left.SetPercent(-20);
+
+        while(RPS.X() > D_x - 2);
+
+        back.SetPercent(0);
+        right.SetPercent(0);
+        left.SetPercent(0);
+
         dropVanilla(left, right, back, leftS, rightS);
     } else if(RPS.GetIceCream() == 1){
+        back.SetPercent(30);
+        right.SetPercent(-20);
+        left.SetPercent(-20);
+
+        while(RPS.X() > D_x - 1);
+
+        back.SetPercent(0);
+        right.SetPercent(0);
+        left.SetPercent(0);
+
         dropMixed(left, right, back, leftS, rightS);
     } else {
+        back.SetPercent(-30);
+        right.SetPercent(20);
+        left.SetPercent(20);
+
+        while(RPS.X() < D_x);
+
+        back.SetPercent(0);
+        right.SetPercent(0);
+        left.SetPercent(0);
+
         dropChocolate(left, right, back, leftS, rightS);
+
+        
     }
 
     prepareBurger(left, right, back, E_x, E_y);
@@ -311,11 +343,17 @@ void individualCompetition(FEHMotor left, FEHMotor right, FEHMotor back, AnalogI
 
     goDownRamp(left, right, back, B_y);
 
-    rotate(left, right, back, true, 50, 75);
+    left.SetPercent(50);
+    right.SetPercent(50);
+    back.SetPercent(50);
 
-    while(RPS.Heading() < 180);
+    while(RPS.Heading() > 180);
 
-    goForward(left, right, back, false, 2, 5.0, 50);
+    left.SetPercent(0);
+    right.SetPercent(0);
+    back.SetPercent(0);
+
+    goForward(left, right, back, false, 2, 5.0, 100);
 
     Sleep(10.0);
 

@@ -62,6 +62,11 @@ int main()
                 individualCompetition(leftM, rightM, backM, cds, leftS, rightS, leftOptoSensor, rightOptoSensor, backOptoSensor, true);
                 break;
             case 1:
+                while(1){
+                    LCD.Clear();
+                    LCD.Write(cds.Value());
+                    Sleep(0.5);
+                }
                 break;
             case 2:
                 break;

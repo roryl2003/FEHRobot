@@ -28,7 +28,7 @@ void hookRotator(FEHServo hook);
 void rpsJukeboxLight(FEHMotor left, FEHMotor right, FEHMotor back, float A_x, float A_y);
 void hitRedButton(FEHMotor left, FEHMotor right, FEHMotor back);
 void hitBlueButton(FEHMotor left, FEHMotor right, FEHMotor back);
-void prepareForRamp(FEHMotor left, FEHMotor right, FEHMotor back, float x);
+void prepareForRamp(FEHMotor left, FEHMotor right, FEHMotor back, float x, float y);
 void goUpRamp(FEHMotor left, FEHMotor right, FEHMotor back, float x, float y);
 void prepareForIceCream(FEHMotor left, FEHMotor right, FEHMotor back, float x, float y);
 void directionalMovementDegrees(FEHMotor left, FEHMotor right, FEHMotor back, int degree, int power);

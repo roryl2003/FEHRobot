@@ -14,7 +14,7 @@ void rotate(FEHMotor left, FEHMotor right, FEHMotor back, bool clockwise, int po
     } else if(degree == -1){
         Sleep(10.0);
     } else if(degree == 60){
-        Sleep(0.55);
+        Sleep(0.6);
     } else if(degree == 75){
         Sleep(0.85);
     } else if(degree == 120){
@@ -148,11 +148,11 @@ void hookRotator(FEHServo hook){
 void rpsJukeboxLight(FEHMotor left, FEHMotor right, FEHMotor back, float x, float y) {
     rotate(left, right, back, false, 50, 120);
     
-    left.SetPercent(-20);
-    right.SetPercent(-20);
-    back.SetPercent(-20);
+    left.SetPercent(-35);
+    right.SetPercent(-35);
+    back.SetPercent(-35);
     
-    while (RPS.Heading() < 270 - 5);
+    while (RPS.Heading() < 270 - 10);
 
 
     left.SetPercent(25);
@@ -161,7 +161,7 @@ void rpsJukeboxLight(FEHMotor left, FEHMotor right, FEHMotor back, float x, floa
 
     //directionalMovementDegrees(left, right, back, 90, 25);
 
-    while (RPS.Y() > y + 0.5 || RPS.Y() < 0);
+    while (RPS.Y() > y + 0.25 || RPS.Y() < 0);
 
     LCD.WriteLine(RPS.Y());
 
@@ -172,7 +172,7 @@ void rpsJukeboxLight(FEHMotor left, FEHMotor right, FEHMotor back, float x, floa
 
         //directionalMovementDegrees(left, right, back, 180, 25);
 
-        while (RPS.X() < x - 1.0);
+        while (RPS.X() < x - 0.5);
     }
     else if (RPS.X() > x + 0.5) {
         left.SetPercent(18);
@@ -206,14 +206,24 @@ void hitBlueButton(FEHMotor left, FEHMotor right, FEHMotor back){
     rotate(left, right, back, true, 50, 60);
 }
 
-void prepareForRamp(FEHMotor left, FEHMotor right, FEHMotor back, float x) {
-    directionalMovementDegrees(left, right, back, 0, 50);
+void prepareForRamp(FEHMotor left, FEHMotor right, FEHMotor back, float x, float y) {
+    left.SetPercent(20);
+    right.SetPercent(20);
+    back.SetPercent(20);
 
-    Sleep(1.0);
+    while (RPS.Heading() > 100);
+    
+    left.SetPercent(20);
+    right.SetPercent(-20);
+    back.SetPercent(0);
 
-    directionalMovementDegrees(left, right, back, 0, 20);
+    while(RPS.Y() < y - 1.2);
 
-    while (RPS.X() < x - 0.7);
+    back.SetPercent(-48);
+    right.SetPercent(26);
+    left.SetPercent(26);
+
+    while (RPS.X() < x - 2.0);
 
     // Rotation
     /*left.SetPercent(20);
@@ -222,15 +232,11 @@ void prepareForRamp(FEHMotor left, FEHMotor right, FEHMotor back, float x) {
 
     while (RPS.Heading() > 90 + 5);*/
 
-    directionalMovement(left, right, back, 0, 0);
+    left.SetPercent(-20);
+    right.SetPercent(-20);
+    back.SetPercent(-20);
 
-    Sleep(0.5);
-
-    left.SetPercent(10);
-    right.SetPercent(10);
-    back.SetPercent(10);
-
-    while (RPS.Heading() > 110);
+    while (RPS.Heading() < 95);
     
     /*else if (RPS.Heading() < 85) {
         left.SetPercent(-20);
@@ -243,8 +249,6 @@ void prepareForRamp(FEHMotor left, FEHMotor right, FEHMotor back, float x) {
     left.SetPercent(0);
     right.SetPercent(0);
     back.SetPercent(0);
-
-    Sleep(2.0);
 }
 
 void prepareForRamp2(FEHMotor left, FEHMotor right, FEHMotor back, float x){
@@ -253,20 +257,6 @@ void prepareForRamp2(FEHMotor left, FEHMotor right, FEHMotor back, float x){
     right.SetPercent(20);
 
     while (RPS.X() > x + 0.5);
-
-    left.SetPercent(0);
-    right.SetPercent(0);
-    back.SetPercent(0);
-
-    Sleep(2.0);
-} 
-
-void goDownRamp(FEHMotor left, FEHMotor right, FEHMotor back, float y) {
-    left.SetPercent(20);
-    right.SetPercent(-20);
-    back.SetPercent(0);
-
-    while (RPS.Y() > y - 1);
 
     if (RPS.Heading() > 275) {
         left.SetPercent(20);
@@ -282,13 +272,22 @@ void goDownRamp(FEHMotor left, FEHMotor right, FEHMotor back, float y) {
 
         while (RPS.Heading() < 265);
     }
+
+    left.SetPercent(0);
+    right.SetPercent(0);
+    back.SetPercent(0);
+} 
+
+void goDownRamp(FEHMotor left, FEHMotor right, FEHMotor back, float y) {
+    left.SetPercent(75);
+    right.SetPercent(-75);
+    back.SetPercent(0);
+
+    while (RPS.Y() > y - 1);
 }
 
 void goUpRamp(FEHMotor left, FEHMotor right, FEHMotor back, float x, float y) {
     //directionalMovementDegrees(left, right, back, 90, 90);
-    LCD.WriteLine(RPS.Y());
-    LCD.WriteLine(y);
-
     left.SetPercent(90);
     right.SetPercent(-93);
     back.SetPercent(0);
@@ -309,8 +308,6 @@ void goUpRamp(FEHMotor left, FEHMotor right, FEHMotor back, float x, float y) {
 
         while (RPS.Heading() < 85);
     }
-
-    Sleep(0.5);
 }
 
 void prepareForIceCream(FEHMotor left, FEHMotor right, FEHMotor back, float x, float y) {
@@ -321,11 +318,11 @@ void prepareForIceCream(FEHMotor left, FEHMotor right, FEHMotor back, float x, f
     }
 
     directionalMovement(left, right, back, rads, 20);*/
-    left.SetPercent(20);
-    right.SetPercent(-20);
+    left.SetPercent(35);
+    right.SetPercent(-35);
     back.SetPercent(0);
 
-    while (RPS.Y() < y - 0.5);
+    while (RPS.Y() < y - 2.5);
 
     /*left.SetPercent(-10);
     right.SetPercent(-10);
@@ -400,16 +397,15 @@ void directionalMovement(FEHMotor left, FEHMotor right, FEHMotor back, int degre
 
 void dropChocolate(FEHMotor left, FEHMotor right, FEHMotor back, FEHServo leftS, FEHServo rightS){
     flipSwitch(leftS, rightS);
-    moveSideways(left, right, back, true, 0.3, 50);
     goForward(left, right, back, false, 0, 1.7, 50);
-    rotate(left, right, back, false, 50, 20);
+    rotate(left, right, back, true, 50, 20);
     dropArm(leftS, rightS);
     goForward(left, right, back, true, 0, 1.0, 50);
     Sleep(5.25);
     goForward(left, right, back, false, 0, 1.0, 50);
     flipSwitch(leftS, rightS);
     rotate(left, right, back, true, 50, 20);
-    goForward(left, right, back, true, 0, 1.7, 50);
+    goForward(left, right, back, true, 0, 1.0, 50);
     dropArm(leftS, rightS);
 }
 
@@ -428,7 +424,6 @@ void dropMixed(FEHMotor left, FEHMotor right, FEHMotor back, FEHServo leftS, FEH
 
 void dropVanilla(FEHMotor left, FEHMotor right, FEHMotor back, FEHServo leftS, FEHServo rightS){
     flipSwitch(leftS, rightS);
-    moveSideways(left, right, back, false, 0.2, 50);
     goForward(left, right, back, false, 0, 1.7, 50);
     rotate(left, right, back, false, 50, 20);
     dropArm(leftS, rightS);
@@ -441,11 +436,11 @@ void dropVanilla(FEHMotor left, FEHMotor right, FEHMotor back, FEHServo leftS, F
 }
 
 void prepareBurger(FEHMotor left, FEHMotor right, FEHMotor back, float x, float y) {
-    left.SetPercent(-20);
-    right.SetPercent(20);
+    left.SetPercent(-35);
+    right.SetPercent(35);
     back.SetPercent(0);
 
-    while (RPS.X() < x - 0.2);
+    while (RPS.X() < x - 0.75);
 
     left.SetPercent(0);
     right.SetPercent(0);
@@ -462,19 +457,19 @@ void prepareBurger(FEHMotor left, FEHMotor right, FEHMotor back, float x, float 
     back.SetPercent(0);
     Sleep(0.5);
 
-    left.SetPercent(20);
-    right.SetPercent(-20);
+    left.SetPercent(50);
+    right.SetPercent(-50);
 
-    while(RPS.Y() < y - 0.5);
+    while(RPS.Y() < y - 2.0);
 
     left.SetPercent(0);
     right.SetPercent(0);
 }
 
 void slideTicket(FEHMotor left, FEHMotor right, FEHMotor back, float x, float y) {
-    left.SetPercent(-20);
-    right.SetPercent(-20);
-    back.SetPercent(-20);
+    left.SetPercent(-35);
+    right.SetPercent(-35);
+    back.SetPercent(-35);
 
     while (RPS.Heading() < 260);
 
@@ -486,13 +481,13 @@ void slideTicket(FEHMotor left, FEHMotor right, FEHMotor back, float x, float y)
 
     while (RPS.X() < x - 0.5);
 
-    left.SetPercent(20);
-    right.SetPercent(-20);
+    left.SetPercent(50);
+    right.SetPercent(-50);
     back.SetPercent(0);
 
-    while (RPS.Y() > y + 1);
+    while (RPS.Y() > y + 2.5);
         
-    moveSideways(left, right, back, false, 0.3, 30);
+    moveSideways(left, right, back, false, 0.5, 30);
 
     //directionalMovementDegrees(left, right, back, 0, 50);
 

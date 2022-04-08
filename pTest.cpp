@@ -230,19 +230,27 @@ void individualCompetition(FEHMotor left, FEHMotor right, FEHMotor back, AnalogI
 
     // Fetch RPS Values
     FEHFile* fptr;
+    float A_x, A_y, B_x, B_y, C_x, C_y, D_x, D_y, E_x, E_y, F_x, F_y;
     if(fail){
         fptr = SD.FOpen("RPS_TEST.txt", "r");
+        SD.FScanf(fptr, "%f%f", &A_x, &A_y);
+        SD.FScanf(fptr, "%f%f", &B_x, &B_y);
+        SD.FScanf(fptr, "%f%f", &C_x, &C_y);
+        SD.FScanf(fptr, "%f%f", &D_x, &D_y);
+        SD.FScanf(fptr, "%f%f", &E_x, &E_y);
+        SD.FScanf(fptr, "%f%f", &F_x, &F_y);
+        SD.FClose(fptr);
     } else {
         fptr = SD.FOpen("RPS_2.txt", "r");
+        SD.FScanf(fptr, "%f%f", &A_x, &A_y);
+        SD.FScanf(fptr, "%f%f", &B_x, &B_y);
+        C_x = B_x;
+        C_y = B_y + 19;
+        SD.FScanf(fptr, "%f%f", &D_x, &D_y);
+        SD.FScanf(fptr, "%f%f", &E_x, &E_y);
+        SD.FScanf(fptr, "%f%f", &F_x, &F_y);
+        SD.FClose(fptr);
     }
-    float A_x, A_y, B_x, B_y, C_x, C_y, D_x, D_y, E_x, E_y, F_x, F_y;
-    SD.FScanf(fptr, "%f%f", &A_x, &A_y);
-    SD.FScanf(fptr, "%f%f", &B_x, &B_y);
-    SD.FScanf(fptr, "%f%f", &C_x, &C_y);
-    SD.FScanf(fptr, "%f%f", &D_x, &D_y);
-    SD.FScanf(fptr, "%f%f", &E_x, &E_y);
-    SD.FScanf(fptr, "%f%f", &F_x, &F_y);
-    SD.FClose(fptr);
     
     // Start with start light
     float redMin = 0, redMax = 1.5, blueMin = 0.0, blueMax = 1.5, clearMin = 2.459, clearMax = 2.550, startTime = TimeNow();
@@ -250,9 +258,25 @@ void individualCompetition(FEHMotor left, FEHMotor right, FEHMotor back, AnalogI
 
     // Travel to Drop Cart
     rotate(left, right, back, false, 50, 60);
-    goForward(left, right, back, false, 0, 3.7, 50);
-    rotate(left, right, back, true, 50, 60);
-    goForward(left, right, back, false, 0, 0.5, 50);
+
+    left.SetPercent(75);
+    right.SetPercent(-75);
+    back.SetPercent(0);
+
+    while(RPS.X() > A_x);
+
+    left.SetPercent(35);
+    right.SetPercent(35);
+    back.SetPercent(35);
+
+    while(RPS.Heading() > 110);
+
+    left.SetPercent(30);
+    right.SetPercent(-30);
+    back.SetPercent(0);
+
+    while(RPS.Y() < B_y + 0.25);
+
     dropCart(left, right, back, leftS, rightS);
 
     // Printing Out Split
@@ -268,7 +292,7 @@ void individualCompetition(FEHMotor left, FEHMotor right, FEHMotor back, AnalogI
 
     // Hit Appropriate Button and Line Up With Ramp
 
-    Sleep(0.5);
+    Sleep(0.1);
 
     LCD.WriteLine(cds.Value());
 
@@ -293,11 +317,11 @@ void individualCompetition(FEHMotor left, FEHMotor right, FEHMotor back, AnalogI
     prepareForIceCream(left, right, back, D_x, D_y);
 
     if(RPS.GetIceCream() == 0){
-        back.SetPercent(30);
-        right.SetPercent(-20);
-        left.SetPercent(-20);
+        back.SetPercent(-30);
+        right.SetPercent(20);
+        left.SetPercent(20);
 
-        while(RPS.X() > D_x - 2);
+        while(RPS.X() < D_x);
 
         back.SetPercent(0);
         right.SetPercent(0);
@@ -305,11 +329,11 @@ void individualCompetition(FEHMotor left, FEHMotor right, FEHMotor back, AnalogI
 
         dropVanilla(left, right, back, leftS, rightS);
     } else if(RPS.GetIceCream() == 1){
-        back.SetPercent(30);
-        right.SetPercent(-20);
-        left.SetPercent(-20);
+        back.SetPercent(-30);
+        right.SetPercent(20);
+        left.SetPercent(20);
 
-        while(RPS.X() > D_x - 1);
+        while(RPS.X() < D_x + 1.75);
 
         back.SetPercent(0);
         right.SetPercent(0);
@@ -321,7 +345,7 @@ void individualCompetition(FEHMotor left, FEHMotor right, FEHMotor back, AnalogI
         right.SetPercent(20);
         left.SetPercent(20);
 
-        while(RPS.X() < D_x);
+        while(RPS.X() < D_x + 1.5);
 
         back.SetPercent(0);
         right.SetPercent(0);
@@ -347,7 +371,7 @@ void individualCompetition(FEHMotor left, FEHMotor right, FEHMotor back, AnalogI
     right.SetPercent(50);
     back.SetPercent(50);
 
-    while(RPS.Heading() > 180);
+    while(RPS.Heading() > 218);
 
     left.SetPercent(0);
     right.SetPercent(0);
@@ -356,6 +380,4 @@ void individualCompetition(FEHMotor left, FEHMotor right, FEHMotor back, AnalogI
     goForward(left, right, back, false, 2, 5.0, 100);
 
     Sleep(10.0);
-
-    
 }

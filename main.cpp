@@ -38,8 +38,8 @@ int main()
     FEHMotor rightM(FEHMotor::Motor2, 7.2);
     FEHMotor backM(FEHMotor::Motor1, 7.2);
 
-    FEHServo leftS(FEHServo::Servo0);
-    FEHServo rightS(FEHServo::Servo7);
+    FEHServo leftS(FEHServo::Servo7);
+    FEHServo rightS(FEHServo::Servo0);
 
     AnalogInputPin cds(FEHIO::P0_0);
 

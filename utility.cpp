@@ -26,7 +26,7 @@ void readRPSVals() {
      * E = Preparing for burger
      * F = in ticket
      */
-    char points[] = {'A', 'B', 'C', 'D', 'E', 'F'};
+    char points[] = {'A', 'B', 'D', 'E', 'F'};
 
     //Call this function to initialize the RPS to a course
     RPS.InitializeTouchMenu();
@@ -62,7 +62,7 @@ void readRPSVals() {
             LCD.WriteRC(RPS.Y(),3,12); //update the y coordinate
             LCD.WriteRC(RPS.Heading(),4,12); //update the heading
 
-            Sleep(10); //wait for a 10ms to avoid updating the screen too quickly
+            Sleep(0.1); //wait for a 10ms to avoid updating the screen too quickly
         }
         while(LCD.Touch(&touch_x, &touch_y));
 

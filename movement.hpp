@@ -42,5 +42,6 @@ void prepareBurger(FEHMotor left, FEHMotor right, FEHMotor back, float x, float 
 void slideTicket(FEHMotor left, FEHMotor right, FEHMotor back, float x, float y);
 void prepareForRamp2(FEHMotor left, FEHMotor right, FEHMotor back, float x);
 void goDownRamp(FEHMotor left, FEHMotor right, FEHMotor back, float y);
+void finishButton(FEHMotor left, FEHMotor right, FEHMotor back);
 
 #endif

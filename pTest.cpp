@@ -244,26 +244,32 @@ void individualCompetition(FEHMotor left, FEHMotor right, FEHMotor back, AnalogI
         fptr = SD.FOpen("RPS_2.txt", "r");
         SD.FScanf(fptr, "%f%f", &A_x, &A_y);
         SD.FScanf(fptr, "%f%f", &B_x, &B_y);
-        C_x = B_x;
+        C_x = B_x + 1;
         C_y = B_y + 19;
         SD.FScanf(fptr, "%f%f", &D_x, &D_y);
         SD.FScanf(fptr, "%f%f", &E_x, &E_y);
         SD.FScanf(fptr, "%f%f", &F_x, &F_y);
         SD.FClose(fptr);
     }
-    
+
     // Start with start light
     float redMin = 0, redMax = 1.5, blueMin = 0.0, blueMax = 1.5, clearMin = 2.459, clearMax = 2.550, startTime = TimeNow();
     while(!inRange(cds.Value(), redMin, redMax));
 
     // Travel to Drop Cart
     rotate(left, right, back, false, 50, 60);
+    goForward(left, right, back, false, 0, 3.4, 50);
+    rotate(left, right, back, true, 50, 60);
+    goForward(left, right, back, false, 0, 0.75, 50);
+    dropCart(left, right, back, leftS, rightS);
+
+    /*
 
     left.SetPercent(75);
     right.SetPercent(-75);
     back.SetPercent(0);
 
-    while(RPS.X() > A_x);
+    while(RPS.X() > A_x || RPS.X() < -0.5);
 
     left.SetPercent(35);
     right.SetPercent(35);
@@ -278,6 +284,8 @@ void individualCompetition(FEHMotor left, FEHMotor right, FEHMotor back, AnalogI
     while(RPS.Y() < B_y + 0.25);
 
     dropCart(left, right, back, leftS, rightS);
+
+    */
 
     // Printing Out Split
     LCD.Write("Cart Split: ");
@@ -321,7 +329,7 @@ void individualCompetition(FEHMotor left, FEHMotor right, FEHMotor back, AnalogI
         right.SetPercent(20);
         left.SetPercent(20);
 
-        while(RPS.X() < D_x);
+        while(RPS.X() < D_x - 0.33);
 
         back.SetPercent(0);
         right.SetPercent(0);
@@ -333,7 +341,7 @@ void individualCompetition(FEHMotor left, FEHMotor right, FEHMotor back, AnalogI
         right.SetPercent(20);
         left.SetPercent(20);
 
-        while(RPS.X() < D_x + 1.75);
+        while(RPS.X() < D_x + 1.0);
 
         back.SetPercent(0);
         right.SetPercent(0);
@@ -345,15 +353,13 @@ void individualCompetition(FEHMotor left, FEHMotor right, FEHMotor back, AnalogI
         right.SetPercent(20);
         left.SetPercent(20);
 
-        while(RPS.X() < D_x + 1.5);
+        while(RPS.X() < D_x + 0.75);
 
         back.SetPercent(0);
         right.SetPercent(0);
         left.SetPercent(0);
 
         dropChocolate(left, right, back, leftS, rightS);
-
-        
     }
 
     prepareBurger(left, right, back, E_x, E_y);
@@ -367,11 +373,13 @@ void individualCompetition(FEHMotor left, FEHMotor right, FEHMotor back, AnalogI
 
     goDownRamp(left, right, back, B_y);
 
+    Sleep(0.25);
+
     left.SetPercent(50);
     right.SetPercent(50);
     back.SetPercent(50);
 
-    while(RPS.Heading() > 218);
+    while(RPS.Heading() > 205 || RPS.Heading() < -0.5);
 
     left.SetPercent(0);
     right.SetPercent(0);
